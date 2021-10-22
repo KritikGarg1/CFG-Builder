@@ -50,18 +50,30 @@ displayFrame.place(relwidth=0.67, relheight=0.8, relx=0.31,rely=0.15)
 
 images=[]
 def run():
-
+    images.clear()
+    for widget in displayFrame.winfo_children():
+        widget.destroy()
     for file in files:
         cfg = CFGBuilder().build_from_file('output', file)
-        cfg.build_visual('output', 'png')
+        cfg.build_visual('output', 'png',show=False)
         img = Image.open("output.png").resize((650, 450), Image.ANTIALIAS)
         tkimage = ImageTk.PhotoImage(img)
         images.append(tkimage)
-        
+    
+
     for tkimages in images:
         label=tk.Label(displayFrame, image=tkimages)
         label.photo=tkimages
         label.pack().pady(5)
+
+def reset():
+
+    for widget in filesList.winfo_children():
+        widget.destroy()
+    for widget in displayFrame.winfo_children():
+        widget.destroy()    
+    files.clear()
+    images.clear()
 
 
 buttonsFrame=tk.Frame(root,highlightbackground="#86ABD7",highlightthickness=1.5,bg="#D0E4EC")
@@ -80,7 +92,7 @@ pady=10,fg="#FFFFFF",bg="#234FA4", command=addFiles)
 bDownload.grid(row=0,column=2,padx=(9,0),pady=(7,7))
 
 bReset=tk.Button(buttonsFrame,text="RESET", padx=60,
-pady=10,fg="#FFFFFF",bg="#234FA4", command=addFiles)
+pady=10,fg="#FFFFFF",bg="#234FA4", command=reset)
 bReset.grid(row=0,column=3,padx=(9,0),pady=(7,7))
 
 
