@@ -1,8 +1,9 @@
 import tkinter as tk
-from tkinter import filedialog, Text
+from tkinter import filedialog, Text, Listbox
 from tkinter.ttk import *
 from staticfg import CFGBuilder
 from PIL import Image, ImageTk
+from tkscrolledframe import ScrolledFrame
 import os
 
 root =tk.Tk(className=' CFG Builder')
@@ -45,26 +46,39 @@ browse.place(relx=0.28,rely=0.9)
 #part 2 -----------------------------------------
 
 
-displayFrame = tk.Frame(root, bg="#D0DDEC", highlightbackground="#86ABD7",highlightthickness=1.5)
-displayFrame.place(relwidth=0.67, relheight=0.8, relx=0.31,rely=0.15)
+xdisplayFrame = tk.Frame(root, bg="#D0DDEC", highlightbackground="#86ABD7",highlightthickness=1.5)
+xdisplayFrame.place(relwidth=0.67, relheight=0.8, relx=0.31,rely=0.15)
+frame_top = tk.Frame(xdisplayFrame, width=400, height=250)
+frame_top.pack(side="top", expand=1, fill="both")
+
+# Create a ScrolledFrame widget
+sf = ScrolledFrame(frame_top, width=380, height=240)
+sf.pack(side="top", expand=1, fill="both")
+
+# Bind the arrow keys and scroll wheel
+sf.bind_arrow_keys(frame_top)
+sf.bind_scroll_wheel(frame_top)
+
+displayFrame = sf.display_widget(tk.Frame)
 
 images=[]
 def run():
     images.clear()
     for widget in displayFrame.winfo_children():
         widget.destroy()
+        
     for file in files:
         cfg = CFGBuilder().build_from_file('output', file)
         cfg.build_visual('output', 'png',show=False)
-        img = Image.open("output.png").resize((650, 450), Image.ANTIALIAS)
+        img = Image.open("output.png").resize((700, 550), Image.ANTIALIAS)
         tkimage = ImageTk.PhotoImage(img)
         images.append(tkimage)
-    
 
     for tkimages in images:
         label=tk.Label(displayFrame, image=tkimages)
         label.photo=tkimages
-        label.pack().pady(5)
+        label.pack()
+
 
 def reset():
 
