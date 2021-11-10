@@ -1,41 +1,55 @@
 digraph clusteroutput {
 	graph [label=output]
-	1 [label="def insertionSort(arr):...
-arr = [12, 11, 13, 5, 6]
-insertionSort(arr)
-print('Sorted array is:')
+	1 [label="def binary_search(arr, x):...
+arr = [2, 3, 4, 10, 40]
+x = int(input())
+result = binary_search(arr, x)
+if result != -1:
 "]
-	"1_calls" [label="insertionSort
-print" shape=box]
+	"1_calls" [label="int
+binary_search" shape=box]
 	1 -> "1_calls" [label=calls style=dashed]
-	10 [label="for i in range(len(arr)):
+	16 [label="print('Element is present at index', str(result))
 "]
-	11 [label="print('%d' % arr[i])
+	"16_calls" [label=print shape=box]
+	16 -> "16_calls" [label=calls style=dashed]
+	1 -> 16 [label="result != -1"]
+	18 [label="print('Element is not present in array')
 "]
-	"11_calls" [label=print shape=box]
-	11 -> "11_calls" [label=calls style=dashed]
-	11 -> 10 [label=""]
-	10 -> 11 [label="range(len(arr))"]
-	1 -> 10 [label=""]
-	subgraph clusterinsertionSort {
-		graph [label=insertionSort]
-		3 [label="for i in range(1, len(arr)):
+	"18_calls" [label=print shape=box]
+	18 -> "18_calls" [label=calls style=dashed]
+	1 -> 18 [label="(result == -1)"]
+	subgraph clusterbinary_search {
+		graph [label=binary_search]
+		3 [label="low = 0
+high = len(arr) - 1
+mid = 0
 "]
-		4 [label="key = arr[i]
-j = i - 1
+		"3_calls" [label=len shape=box]
+		3 -> "3_calls" [label=calls style=dashed]
+		4 [label="while low <= high:
 "]
-		6 [label="while j >= 0 and key < arr[j]:
+		5 [label="mid = (high + low) // 2
+if arr[mid] < x:
 "]
-		7 [label="arr[j + 1] = arr[j]
-j -= 1
+		7 [label="low = mid + 1
 "]
-		7 -> 6 [label=""]
-		6 -> 7 [label="j >= 0 and key < arr[j]"]
-		8 [label="arr[j + 1] = key
+		7 -> 4 [label=""]
+		5 -> 7 [label="arr[mid] < x"]
+		9 [label="if arr[mid] > x:
 "]
-		8 -> 3 [label=""]
-		6 -> 8 [label="(not (j >= 0 and key < arr[j]))"]
-		4 -> 6 [label=""]
-		3 -> 4 [label="range(1, len(arr))"]
+		10 [label="high = mid - 1
+"]
+		10 -> 4 [label=""]
+		9 -> 10 [label="arr[mid] > x"]
+		12 [label="return mid
+"]
+		9 -> 12 [label="(arr[mid] <= x)"]
+		5 -> 9 [label="(arr[mid] >= x)"]
+		4 -> 5 [label="low <= high"]
+		6 [label="return -1
+"]
+		4 -> 6 [label="(low > high)"]
+		3 -> 4 [label=""]
 	}
 }

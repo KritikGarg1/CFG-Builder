@@ -7,11 +7,10 @@ from tkscrolledframe import ScrolledFrame
 import os
 
 root =tk.Tk(className=' CFG Builder')
-root.geometry("1100x700")
+root.geometry("1300x800")
 root.configure(bg="#D0E4EC")
 
-
-#part 1 -----------------------------------------
+#part 1 ---------------------------------------------------------
 
 files=[]
 # pyico=tk.PhotoImage(file="python_icon.png")
@@ -34,8 +33,8 @@ frame.place(relwidth=0.3, relheight=1, relx=0.01)
 filesList = tk.Frame(root, highlightbackground="#86ABD7",highlightthickness=1.5, bg="#FFFFFF")
 filesList.place(relwidth=0.28, relheight=0.5, relx=0.02,rely=0.02)
 
-drop = tk.Frame(root, highlightbackground="#86ABD7",highlightthickness=1.5, bg="#D0DDEC")
-drop.place(relwidth=0.28, relheight=0.3, relx=0.02,rely=0.55)
+reportFrame = tk.Frame(root, highlightbackground="#86ABD7",highlightthickness=1.5, bg="#D0DDEC")
+reportFrame.place(relwidth=0.28, relheight=0.35, relx=0.02,rely=0.53)
 
 browse=tk.Button(frame,text="BROWSE", padx=35,
 pady=5,fg="#000000",bg="#FFFFFF", command=addFiles)
@@ -66,11 +65,11 @@ def run():
     images.clear()
     for widget in displayFrame.winfo_children():
         widget.destroy()
-        
+
     for file in files:
         cfg = CFGBuilder().build_from_file('output', file)
         cfg.build_visual('output', 'png',show=False)
-        img = Image.open("output.png").resize((700, 550), Image.ANTIALIAS)
+        img = Image.open("output.png").resize((850, 650), Image.ANTIALIAS)
         tkimage = ImageTk.PhotoImage(img)
         images.append(tkimage)
 
@@ -111,6 +110,18 @@ bReset.grid(row=0,column=3,padx=(9,0),pady=(7,7))
 
 
 #part 3 -----------------------------------------
+
+bView=tk.Button(reportFrame,text="View the Report", padx=35,
+pady=6,fg="#FFFFFF",bg="#234FA4")
+bView.grid(row=0,column=0,padx=(12,4),pady=(170,5))
+
+bGenerate=tk.Button(reportFrame,text="Generate Report", padx=35,
+pady=6,fg="#FFFFFF",bg="#2DA423")
+bGenerate.grid(row=0,column=1,padx=(8,4),pady=(170,5))
+
+bCoverage=tk.Button(reportFrame,text="Generate full coverage tests", padx=90,
+pady=7,fg="#FFFFFF",bg="#234FA4")
+bCoverage.place(relx=0.038,rely=0.78)
 
 
 root.mainloop()
