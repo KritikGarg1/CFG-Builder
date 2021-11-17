@@ -44,7 +44,6 @@ browse.place(relx=0.28,rely=0.9)
 
 #part 2 -----------------------------------------
 
-
 xdisplayFrame = tk.Frame(root, bg="#D0DDEC", highlightbackground="#86ABD7",highlightthickness=1.5)
 xdisplayFrame.place(relwidth=0.67, relheight=0.8, relx=0.31,rely=0.15)
 frame_top = tk.Frame(xdisplayFrame, width=400, height=250)
@@ -92,6 +91,8 @@ def reset():
 buttonsFrame=tk.Frame(root,highlightbackground="#86ABD7",highlightthickness=1.5,bg="#D0E4EC")
 buttonsFrame.place(relwidth=0.67, relheight=0.1, relx=0.31,rely=0.02)
 
+
+
 bRun=tk.Button(buttonsFrame,text="RUN", padx=60,
 pady=10,fg="#FFFFFF",bg="#2DA423", command=run)
 bRun.grid(row=0,column=0,padx=(9,0),pady=(7,7))
@@ -111,17 +112,26 @@ bReset.grid(row=0,column=3,padx=(9,0),pady=(7,7))
 
 #part 3 -----------------------------------------
 
-bView=tk.Button(reportFrame,text="View the Report", padx=35,
-pady=6,fg="#FFFFFF",bg="#234FA4")
-bView.grid(row=0,column=0,padx=(12,4),pady=(170,5))
+def generateReport():
+    tests=entry.get("1.0",'end-1c')
+    print(tests)
+    for file in files:
+        print("python -m coverage run "+file)
+        os.system("python -m coverage run "+file+" --lista "+tests)
+        os.system("python -m coverage html")
+        os.system("D:\cfg\htmlcov\index.html")
 
-bGenerate=tk.Button(reportFrame,text="Generate Report", padx=35,
-pady=6,fg="#FFFFFF",bg="#2DA423")
-bGenerate.grid(row=0,column=1,padx=(8,4),pady=(170,5))
+disFrame=tk.Frame(reportFrame,bg="#FFFFFF")
+disFrame.place(relwidth=0.93, relheight=0.45, relx=0.038,rely=0.045)
+entry = tk.Text(disFrame,width=56,height=30,font=("Helvetica", 18),pady=5,padx=5)
+entry.pack()
+
+bGenerate=tk.Button(reportFrame,text="Generate report on test case", padx=90,
+pady=7,fg="#FFFFFF",bg="#234FA4",command=generateReport)
+bGenerate.place(relx=0.038,rely=0.58)
 
 bCoverage=tk.Button(reportFrame,text="Generate full coverage tests", padx=90,
-pady=7,fg="#FFFFFF",bg="#234FA4")
+pady=7,fg="#FFFFFF",bg="#2DA423")
 bCoverage.place(relx=0.038,rely=0.78)
-
 
 root.mainloop()
