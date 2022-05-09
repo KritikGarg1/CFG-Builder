@@ -44,11 +44,11 @@ def inorder(root):
  
 # Driver program to test the above functions
 # Let us create the following BST
-#    50
+#    10
 #  /     \
-# 30     70
+# 6     14
 #  / \ / \
-# 20 40 60 80
+# 4 8 12 16
  
 r = Node(10)
 r = insert(r, 6)

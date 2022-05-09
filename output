@@ -6,92 +6,67 @@ CLI = argparse.ArgumentParser()
 CLI.add_argument('--lista', nargs='*', type=int, default=[])
 args = CLI.parse_args()
 tests = args.lista
-def __init__(self, key):...
-def insert(root, key):...
-def inorder(root):...
-r = Node(10)
-r = insert(r, 6)
-r = insert(r, 4)
-r = insert(r, 8)
-r = insert(r, 14)
-r = insert(r, 12)
-r = insert(r, 16)
+def binary_search(arr, x):...
+arr = [2, 3, 4, 10, 40]
 "]
 	"1_calls" [label="argparse.ArgumentParser
 CLI.add_argument
-CLI.parse_args
-Node
-insert
-insert
-insert
-insert
-insert
-insert" shape=box]
+CLI.parse_args" shape=box]
 	1 -> "1_calls" [label=calls style=dashed]
-	25 [label="for x in tests:
+	16 [label="for x in tests:
 "]
-	26 [label="insert(r, x)
+	17 [label="print(x)
+result = binary_search(arr, x)
+if result != -1:
 "]
-	"26_calls" [label=insert shape=box]
-	26 -> "26_calls" [label=calls style=dashed]
-	26 -> 25 [label=""]
-	25 -> 26 [label=tests]
-	27 [label="inorder(r)
+	"17_calls" [label="print
+binary_search" shape=box]
+	17 -> "17_calls" [label=calls style=dashed]
+	19 [label="print('Element is present at index', str(result))
 "]
-	"27_calls" [label=inorder shape=box]
-	27 -> "27_calls" [label=calls style=dashed]
-	25 -> 27 [label=""]
-	1 -> 25 [label=""]
-	subgraph cluster__init__ {
-		graph [label=__init__]
-		3 [label="self.left = None
-self.right = None
-self.val = key
+	"19_calls" [label=print shape=box]
+	19 -> "19_calls" [label=calls style=dashed]
+	19 -> 16 [label=""]
+	17 -> 19 [label="result != -1"]
+	21 [label="print('Element is not present in array')
 "]
-	}
-	subgraph clusterinsert {
-		graph [label=insert]
-		6 [label="if root is None:
+	"21_calls" [label=print shape=box]
+	21 -> "21_calls" [label=calls style=dashed]
+	21 -> 16 [label=""]
+	17 -> 21 [label="(result == -1)"]
+	16 -> 17 [label=tests]
+	1 -> 16 [label=""]
+	subgraph clusterbinary_search {
+		graph [label=binary_search]
+		3 [label="low = 0
+high = len(arr) - 1
+mid = 0
 "]
-		7 [label="return Node(key)
+		"3_calls" [label=len shape=box]
+		3 -> "3_calls" [label=calls style=dashed]
+		4 [label="while low <= high:
 "]
-		6 -> 7 [label="root is None"]
-		9 [label="if root.val == key:
+		5 [label="mid = (high + low) // 2
+if arr[mid] < x:
 "]
-		10 [label="return root
+		7 [label="low = mid + 1
 "]
-		9 -> 10 [label="root.val == key"]
-		12 [label="if root.val < key:
+		7 -> 4 [label=""]
+		5 -> 7 [label="arr[mid] < x"]
+		9 [label="if arr[mid] > x:
 "]
-		13 [label="root.right = insert(root.right, key)
+		10 [label="high = mid - 1
 "]
-		"13_calls" [label=insert shape=box]
-		13 -> "13_calls" [label=calls style=dashed]
-		8 [label="return root
+		10 -> 4 [label=""]
+		9 -> 10 [label="arr[mid] > x"]
+		12 [label="return mid
 "]
-		13 -> 8 [label=""]
-		12 -> 13 [label="root.val < key"]
-		15 [label="root.left = insert(root.left, key)
+		9 -> 12 [label="(arr[mid] <= x)"]
+		5 -> 9 [label="(arr[mid] >= x)"]
+		4 -> 5 [label="low <= high"]
+		6 [label="return -1
 "]
-		"15_calls" [label=insert shape=box]
-		15 -> "15_calls" [label=calls style=dashed]
-		15 -> 8 [label=""]
-		12 -> 15 [label="(root.val >= key)"]
-		9 -> 12 [label="(root.val != key)"]
-		6 -> 9 [label="(root is not None)"]
-	}
-	subgraph clusterinorder {
-		graph [label=inorder]
-		21 [label="if root:
-"]
-		22 [label="inorder(root.left)
-print(root.val)
-inorder(root.right)
-"]
-		"22_calls" [label="inorder
-print
-inorder" shape=box]
-		22 -> "22_calls" [label=calls style=dashed]
-		21 -> 22 [label=root]
+		4 -> 6 [label="(low > high)"]
+		3 -> 4 [label=""]
 	}
 }
