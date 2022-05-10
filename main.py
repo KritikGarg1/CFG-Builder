@@ -4,6 +4,7 @@ from tkinter.ttk import *
 from staticfg import CFGBuilder
 from PIL import Image, ImageTk
 from tkscrolledframe import ScrolledFrame
+import fullCover
 import os
 
 root =tk.Tk(className=' CFG Builder')
@@ -136,6 +137,8 @@ bGenerate=tk.Button(reportFrame,text="Generate report on test case", padx=90,
 pady=7,fg="#FFFFFF",bg="#234FA4",command=generateReport)
 bGenerate.place(relx=0.038,rely=0.5)
 
+
+
 lbFrame=tk.Frame(reportFrame,bg="#FFFFFF")
 lbFrame.place(relwidth=0.43, relheight=0.1, relx=0.038,rely=0.63)
 lbEntry = tk.Text(lbFrame,width=56,height=20,font=("Helvetica", 14),pady=5,padx=5)
@@ -146,10 +149,22 @@ ubFrame.place(relwidth=0.43, relheight=0.1, relx=0.538,rely=0.63)
 ubEntry = tk.Text(ubFrame,width=56,height=20,font=("Helvetica", 14),pady=5,padx=5)
 ubEntry.pack()
 
-# def fullCoverage():
+
+def fullCoverageCall():
+    lbString = lbEntry.get("1.0",'end-1c')
+    ubString = ubEntry.get("1.0",'end-1c')
+
+    if lbString=='' or ubString=='':
+        lbString='0'
+        ubString='0'
+
+    lbInt = int(lbString)
+    ubInt = int(ubString)
+    fullCover.fullCoverage(lbInt, ubInt, files)
 
 bCoverage=tk.Button(reportFrame,text="Generate full coverage tests", padx=90,
-pady=7,fg="#FFFFFF",bg="#2DA423")
+pady=7,fg="#FFFFFF",bg="#2DA423", command=fullCoverageCall)
 bCoverage.place(relx=0.038,rely=0.78)
+
 
 root.mainloop()
